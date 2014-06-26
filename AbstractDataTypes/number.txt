@@ -1,0 +1,19 @@
+﻿type: Number
+sorts: 
+
+operations:
+	zero() -> Number
+	inc(Number) -> Number
+	add(Number, Number) -> Number
+	subtract(Number, Number) -> Number
+	multiply(Number, Number) -> Number
+	divide(Number, Number) -> Number
+axioms:
+	add(zero(), R) = R
+	add(inc(L), R) = add(L, inc(R))
+
+	subtract(L, zero()) = L
+	subtract(inc(L), inc(R)) = subtract(L, R)
+
+	multiply(L, inc(zero())) = L
+	multiply(L, inc(inc(R))) = add(L, multiply(L, inc(R)))

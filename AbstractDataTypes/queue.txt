@@ -1,0 +1,17 @@
+﻿type: Queue
+sorts: bool, Number
+
+operations:
+	empty() -> Queue
+	enqueue(Queue, Number) -> Queue
+	dequeue(Queue) -> Queue
+	is_empty(Queue) -> bool
+	front(Queue) -> Number
+
+axioms:
+	front(enqueue(empty(), t)) = t
+	front(enqueue(enqueue(Q, s), t)) = front(enqueue(Q, s))
+	dequeue(enqueue(empty(), t)) = empty()
+	dequeue(enqueue(enqueue(Q, s), t)) = enqueue(dequeue(enqueue(Q,s)), t)
+	is_empty(empty()) = bool:true()
+	is_empty(enqueue(Q, t)) = bool:not(bool:true())

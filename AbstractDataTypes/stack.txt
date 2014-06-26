@@ -1,0 +1,15 @@
+﻿type: Stack
+sorts: bool, Number
+
+operations:
+	empty() -> Stack
+	push(Stack, Number) -> Stack
+	pop(Stack) -> Stack
+	is_empty(Stack) -> bool
+	top(Stack) -> Number
+
+axioms:
+	pop(push(S, t)) = S
+	top(push(S, t)) = t
+	is_empty(empty()) = bool:true()
+	is_empty(push(S, t)) = bool:not(bool:true())

@@ -1,0 +1,11 @@
+﻿type: bool
+sorts: 
+
+operations:
+	true() -> bool
+	false() -> bool
+	not(bool) -> bool
+
+axioms:
+	not(true()) = false()
+	not(false()) = true()
