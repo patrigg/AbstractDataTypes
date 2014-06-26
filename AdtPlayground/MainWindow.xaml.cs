@@ -149,11 +149,22 @@ namespace AdtPlayground
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var parser = new AbstractDataTypeParser();
-            var expression = parser.parseExpression(new StringReader(this.expression.Text), ((AdtInfo)typeList.SelectedItem).Type.name);
-            while (AbstractDataType.lookup(expression.Type).applyAxioms(ref expression)) ;
-           
-            result.Text = expression.ToString();
+            HashSet<ITerminalTransformer> transformers = new HashSet<AbstractDataTypes.ITerminalTransformer>();
+            transformers.Add(new PeanoNumberLiteralTransformer());
+            transformers.Add(new BoolLiteralTransformer());
+            var parser = new AbstractDataTypeParser(transformers);
+            try
+            {
+                var expression = parser.parseExpression(new StringReader(this.expression.Text), ((AdtInfo)typeList.SelectedItem).Type.name);
+                while (AbstractDataType.lookup(expression.Type).applyAxioms(ref expression)) { }
+                result.Text = expression.ToString();
+            }
+            catch (Exception ex)
+            {
+                result.Text = "Parsing Error: " + ex.Message;
+            }
+
+            
         }
     }
 }

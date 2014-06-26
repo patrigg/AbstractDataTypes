@@ -13,10 +13,10 @@ namespace AbstractDataTypes
         bool match(IElement other, Dictionary<string, IElement> context);
         IElement apply(Dictionary<string, IElement> context);
         IElement clone();
-        string ToString(string type);
+        string ToString(string type, bool prettyPrint = true);
     }
 
-    class Call : IElement
+    public class Call : IElement
     {
         readonly string name;
         readonly string type;
@@ -124,10 +124,10 @@ namespace AbstractDataTypes
             return sb.ToString();
         }
 
-        public string ToString(string omitType)
+        public string ToString(string omitType, bool prettyPrint = true)
         {
             IPrettyPrinter printer;
-            if (AbstractDataType.prettyPrinters.TryGetValue(type, out printer))
+            if (prettyPrint && AbstractDataType.prettyPrinters.TryGetValue(type, out printer))
             {
                 return printer.print(this);
             }
@@ -138,7 +138,7 @@ namespace AbstractDataTypes
         }
     }
 
-    class Terminal : IElement
+    public class Terminal : IElement
     {
         readonly string name;
         readonly string type;
@@ -193,7 +193,7 @@ namespace AbstractDataTypes
             return Type + ":" + Name;
         }
 
-        public string ToString(string omitType)
+        public string ToString(string omitType, bool prettyPrint)
         {
             if (omitType == null || omitType == type)
             {

@@ -13,11 +13,11 @@ using System.Threading.Tasks;
  * 
  * operation-list: operation*
  * 
- * operation: identifier '(' type-list? ')' -> identifier
+ * operation: identifier '(' type-list? ')' '->' identifier
  * 
  * axiom-list: axiom*
  * 
- * axiom: identifier '(' arg-list? ')' '->' identifier ( '(' arg-list? ')' )? 
+ * axiom: identifier '(' arg-list? ')' '=' identifier ( '(' arg-list? ')' )? 
  * 
  */
 namespace AbstractDataTypes
@@ -235,8 +235,18 @@ namespace AbstractDataTypes
 
     public class AbstractDataTypeParser
     {
-        public AbstractDataTypeParser()
+        HashSet<ITerminalTransformer> terminalTransformers;
+
+        public AbstractDataTypeParser(HashSet<ITerminalTransformer> terminalTransformers = null)
         {
+            if(terminalTransformers == null)
+            {
+                this.terminalTransformers = new HashSet<ITerminalTransformer>();
+            }
+            else
+            {
+                this.terminalTransformers = terminalTransformers;
+            }
         }
         
         string[] sorts;
@@ -328,7 +338,16 @@ namespace AbstractDataTypes
             }
             else
             {
-                return new Terminal(name, typename);
+                var term = new Terminal(name, typename);
+                IElement transformed;
+                foreach (var transformer in terminalTransformers)
+                {
+                    if(transformer.transform(term, out transformed))
+                    {
+                        return transformed;
+                    }
+                }
+                return term;
             }
         }
 

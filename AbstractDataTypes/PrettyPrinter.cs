@@ -26,7 +26,10 @@ namespace AbstractDataTypes
             {
                 return count.ToString();
             }
- 	        throw new NotImplementedException();
+            else
+            {
+                return element.ToString(null, false);
+            }
         }
     }
 

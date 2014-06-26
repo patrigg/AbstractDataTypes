@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractDataType.cs" />
+    <Compile Include="AstTransformer.cs" />
     <Compile Include="Axiom.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="PrettyPrinter.cs" />
