@@ -12,12 +12,12 @@ namespace AbstractDataTypes
     {
         LeftParenthesis,
         RightParenthesis,
-        Smaller,
-        Greater,
+        /*Smaller,
+        Greater,*/
         Identifier,
         IdentifierWithType,
-        Equal,
-        Map,
+        /*Equal,
+        Map,*/
         Comma,
         Keyword
     }
@@ -130,7 +130,7 @@ namespace AbstractDataTypes
                         r.Read();
                         currentToken = new Token(TokenType.RightParenthesis, ")");
                         return true;
-                    case '<':
+                    /*case '<':
                         r.Read();
                         currentToken = new Token(TokenType.Smaller, "<");
                         return true;
@@ -154,7 +154,7 @@ namespace AbstractDataTypes
                         {
                             currentToken = createIdentifierOrKeyword(parseIdentifier("-"));
                             return true;
-                        }
+                        }*/
                     default:
                         currentToken = createIdentifierOrKeyword(parseIdentifier());
                         return true;
@@ -199,12 +199,12 @@ namespace AbstractDataTypes
                     case '\t':
                     case '(':
                     case ')':
-                    case '<':
+                    /*case '<':
                     case '>':
-                    case '=':
+                    case '=':*/
                     case ',':
                         return sb.ToString();
-                    case '-':
+                    /*case '-':
                         r.Read();
                         if(r.Peek() == '>')
                         {
@@ -215,7 +215,7 @@ namespace AbstractDataTypes
                         {
                             sb.Append('-');
                         }
-                        break;
+                        break;*/
                     default:
                         sb.Append(r.Read());
                         break;

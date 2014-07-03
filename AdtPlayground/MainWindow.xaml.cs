@@ -76,12 +76,31 @@ namespace AdtPlayground
         {
             InitializeComponent();
             typeList.ItemsSource = types;
-            AbstractDataType.addPrettyPrinter("Number", new NumberPrinter());
-            AbstractDataType.addPrettyPrinter("bool", new BoolPrinter());
+            reloadTypes_Click(this, null);
+            prettyPrint_Click(this, null);
         }
 
         private void newType_Click(object sender, RoutedEventArgs e)
         {
+            var window = new NewWindow();
+            
+            if(!window.ShowDialog() ?? true)
+            {
+                return;
+            }
+
+            var file = new FileInfo("./" + window.Name + ".txt");
+
+            if(file.Exists)
+            {
+                return;
+            }
+
+            var template = string.Format("type: {0}\r\nsorts: \r\n\r\noperations:\r\n\r\naxioms\r\n", window.Name);
+            File.WriteAllText(file.FullName, template);
+
+            var info = addTypeToList(file);
+            typeList.SelectedItem = info.Type;
         }
 
         private void reloadTypes_Click(object sender, RoutedEventArgs e)
@@ -92,21 +111,29 @@ namespace AdtPlayground
             saveType.IsEnabled = false;
             foreach (var file in files)
             {
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(file.Name);
-                try
+                addTypeToList(file);
+            }
+        }
+
+        private AdtInfo addTypeToList(FileInfo file)
+        {
+            var fileName = System.IO.Path.GetFileNameWithoutExtension(file.Name);
+            AdtInfo adtInfo;
+            try
+            {
+                using (var stream = file.OpenText())
                 {
-                    using (var stream = file.OpenText())
-                    {
-                        var adt = AbstractDataType.load(stream);
-                        types.Add(new AdtInfo(fileName, adt));
-                    }
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex);
-                    types.Add(new AdtInfo(fileName, null));
+                    var adt = AbstractDataType.load(stream);
+                    adtInfo = new AdtInfo(fileName, adt);
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                adtInfo = new AdtInfo(fileName, null);
+            }
+            types.Add(adtInfo);
+            return adtInfo;
         }
 
         private void typeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -119,6 +146,7 @@ namespace AdtPlayground
             }
             else
             {
+                currentType.Text = "";
                 saveType.IsEnabled = false;
             }
         }
@@ -149,13 +177,24 @@ namespace AdtPlayground
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if(this.expression.Text.Length == 0)
+            {
+                result.Text = "";
+                return;
+            }
             HashSet<ITerminalTransformer> transformers = new HashSet<AbstractDataTypes.ITerminalTransformer>();
             transformers.Add(new PeanoNumberLiteralTransformer());
             transformers.Add(new BoolLiteralTransformer());
             var parser = new AbstractDataTypeParser(transformers);
             try
             {
-                var expression = parser.parseExpression(new StringReader(this.expression.Text), ((AdtInfo)typeList.SelectedItem).Type.name);
+                string name = null;
+                if(typeList.SelectedItem != null)
+                {
+                    name = ((AdtInfo)typeList.SelectedItem).Type.name;
+                }
+                
+                var expression = parser.parseExpression(new StringReader(this.expression.Text), name);
                 while (AbstractDataType.lookup(expression.Type).applyAxioms(ref expression)) { }
                 result.Text = expression.ToString();
             }
@@ -165,6 +204,34 @@ namespace AdtPlayground
             }
 
             
+        }
+
+        private void removeTypes_Click(object sender, RoutedEventArgs e)
+        {
+            if(typeList.SelectedItem != null)
+            {
+                AbstractDataType.unload(((AdtInfo)typeList.SelectedItem).Type.name);
+                types.Remove((AdtInfo)typeList.SelectedItem);
+
+                typeList.ItemsSource = null;
+                typeList.ItemsSource = types;
+                typeList.SelectedIndex = 0;
+            }
+        }
+
+        private void prettyPrint_Click(object sender, RoutedEventArgs e)
+        {
+            if (prettyPrintTypes.IsChecked ?? false)
+            {
+                AbstractDataType.addPrettyPrinter("Number", new NumberPrinter());
+                AbstractDataType.addPrettyPrinter("bool", new BoolPrinter());
+            }
+            else
+            {
+                AbstractDataType.removePrettyPrinter("Number");
+                AbstractDataType.removePrettyPrinter("bool");
+            }
+            Button_Click(this, null);
         }
     }
 }

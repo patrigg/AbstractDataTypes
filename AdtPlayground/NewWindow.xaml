@@ -1,0 +1,11 @@
+﻿<Window x:Class="AdtPlayground.NewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add type name:" Height="105" Width="193" SizeToContent="Height" ResizeMode="NoResize">
+    <Grid Margin="0,0,0,0">
+        <Button x:Name="okay" Content="Okay" HorizontalAlignment="Left" Margin="10,38,0,10" VerticalAlignment="Top" Width="75" Click="okay_Click"/>
+        <Button x:Name="cancel" Content="Cancel" HorizontalAlignment="Left" Margin="90,38,0,10" VerticalAlignment="Top" Width="75" Click="cancel_Click"/>
+        <TextBox x:Name="name" Height="23" Margin="10,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

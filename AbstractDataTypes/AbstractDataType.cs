@@ -299,7 +299,8 @@ namespace AbstractDataTypes
         private Axiom parseAxiom(Tokenizer tok)
         {
             IElement left = parseSyntaxTree(tok);
-            checkType(tok.take(), TokenType.Equal);
+            //checkType(tok.take(), TokenType.Equal);
+            checkName(tok.take(), "=");
             IElement right = parseSyntaxTree(tok);
             return new Axiom(left, right);
         }
@@ -419,7 +420,8 @@ namespace AbstractDataTypes
 
             checkType(tok.take(), TokenType.RightParenthesis);
 
-            checkType(tok.take(), TokenType.Map);
+            //checkType(tok.take(), TokenType.Map);
+            checkName(tok.take(), "->");
 
             op.resultType = parseType(tok);
 
