@@ -1,10 +1,10 @@
 ﻿<Window x:Class="AdtPlayground.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="441" Width="727">
+        Title="Abstract Datatype Playground" Height="441" Width="727">
     <Grid Margin="0,0,-3,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="140"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="5"/>
@@ -14,6 +14,7 @@
             <Label DockPanel.Dock="Top" Content="Types" Padding="5,2"/>
             <WrapPanel DockPanel.Dock="Bottom">
                 <Button x:Name="removeTypes" Content="Remove" Margin="5,0,0,0" Click="removeTypes_Click"/>
+                <Button x:Name="newType" Content="New" Margin="5,0,0,0" Click="newType_Click"/>
                 <Button x:Name="reloadTypes" Content="Reload" Margin="5,0,0,0" Click="reloadTypes_Click"/>
             </WrapPanel>
             <ListBox x:Name="typeList" DockPanel.Dock="Left" SelectionChanged="typeList_SelectionChanged">
@@ -29,7 +30,6 @@
         <GridSplitter HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Column="1"/>
         <DockPanel Grid.Column="2">
             <WrapPanel DockPanel.Dock="Bottom">
-                <Button x:Name="newType" Content="New" Margin="5,0,0,0" Click="newType_Click"/>
                 <Button x:Name="saveType" Content="Save" Margin="5,0,0,0" Click="saveType_Click"/>
             </WrapPanel>
             <TextBox x:Name="currentType" DockPanel.Dock="Left" AcceptsReturn="True" AcceptsTab="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>

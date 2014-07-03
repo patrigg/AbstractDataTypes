@@ -96,7 +96,7 @@ namespace AdtPlayground
                 return;
             }
 
-            var template = string.Format("type: {0}\r\nsorts: \r\n\r\noperations:\r\n\r\naxioms\r\n", window.Name);
+            var template = string.Format("type: {0}\r\nsorts: \r\n\r\noperations:\r\n\r\naxioms:\r\n", window.Name);
             File.WriteAllText(file.FullName, template);
 
             var info = addTypeToList(file);
@@ -210,7 +210,11 @@ namespace AdtPlayground
         {
             if(typeList.SelectedItem != null)
             {
-                AbstractDataType.unload(((AdtInfo)typeList.SelectedItem).Type.name);
+                var type = ((AdtInfo)typeList.SelectedItem).Type;
+                if(type != null)
+                {
+                    AbstractDataType.unload(type.name);
+                }
                 types.Remove((AdtInfo)typeList.SelectedItem);
 
                 typeList.ItemsSource = null;
