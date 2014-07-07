@@ -75,6 +75,9 @@ namespace AdtPlayground
         public MainWindow()
         {
             InitializeComponent();
+
+            Console.WriteLine(new DirectoryInfo(".").FullName);
+
             typeList.ItemsSource = types;
             reloadTypes_Click(this, null);
             prettyPrint_Click(this, null);

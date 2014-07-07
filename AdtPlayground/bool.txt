@@ -1,0 +1,54 @@
+﻿type: bool
+sorts: 
+
+operations:
+	true() -> bool
+	false() -> bool
+
+	not(bool) -> bool
+
+	eq(bool, bool) -> bool
+	neq(bool, bool) -> bool
+
+	and(bool, bool) -> bool
+	or(bool, bool) -> bool
+
+	xor(bool, bool) -> bool
+
+	!(bool) -> bool
+	&(bool, bool) -> bool
+	|(bool, bool) -> bool
+	=(bool, bool) -> bool
+	!=(bool, bool) -> bool
+
+	select(bool, bool, bool) -> bool
+	implies(bool, bool) -> bool
+
+axioms:
+	not(true()) = false()
+	not(false()) = true()
+	
+	eq(true(), true()) = true()
+	eq(false(), false()) = true()
+	eq(L, R) = false()
+
+	and(false(), R) = false()
+	and(true(), R) = R
+
+	or(true(), R) = true()
+	or(false(), R) = R
+
+	neq(L, R) = not(eq(L, R))
+	xor(L, R) = neq(L, R)
+
+	select(true(), T, F) = T
+	select(false(), T, F) = F
+
+	implies(false(), R) = true()
+	implies(true(), R) = R
+
+	!(B) = not(B)
+	&(L, R) = and(L, R)
+	|(L, R) = or(L, R)
+	=(L, R) = eq(L, R)
+	!=(L, R) = neq(L, R)

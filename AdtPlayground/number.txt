@@ -1,0 +1,62 @@
+﻿type: Number
+sorts: bool
+
+operations:
+	zero() -> Number
+	inc(Number) -> Number
+	add(Number, Number) -> Number
+	subtract(Number, Number) -> Number
+	multiply(Number, Number) -> Number
+	divide(Number, Number) -> Number
+	divide_helper(bool, Number, Number, Number) -> Number
+
+	is_zero(Number) -> bool
+
+	+(Number, Number) -> Number
+	-(Number, Number) -> Number
+	*(Number, Number) -> Number
+	/(Number, Number) -> Number
+
+	>(Number, Number) -> bool
+	<=(Number, Number) -> bool
+	<(Number, Number) -> bool
+	>=(Number, Number) -> bool
+
+	=(Number, Number) -> bool
+	!=(Number, Number) -> bool
+axioms:
+	add(zero(), R) = R
+	add(inc(L), R) = add(L, inc(R))
+
+	subtract(L, zero()) = L
+	subtract(inc(L), inc(R)) = subtract(L, R)
+
+	multiply(L, inc(zero())) = L
+	multiply(L, inc(inc(R))) = add(L, multiply(L, inc(R)))
+
+	divide(L, R) = divide_helper(>=(L, R), L, R, zero())
+	divide_helper(bool:true(), L, R, N) = divide_helper(>=(-(L, R),R), -(L, R), R, inc(N))
+	divide_helper(bool:false(), L, R, N) = N	
+
+	is_zero(zero()) = bool:true()
+	is_zero(T) = bool:false()
+
+	+(L, R) = add(L, R)
+	-(L, R) = subtract(L, R)
+	*(L, R) = multiply(L, R)
+	/(L, R) = divide(L, R)
+
+	>(inc(L), zero()) = bool:true()
+	>(inc(L), inc(R)) = >(L, R)
+	>(zero(), R) = bool:false()
+
+	<=(L, R) = bool:not(>(L, R))
+	<(L, R) = >(R, L)
+	>=(L, R) = bool:not(<(L, R))
+
+	=(zero(), zero()) = bool:true()
+	=(inc(L), inc(R)) = =(L, R)
+	=(L, R) = bool:false()
+	
+	!=(L, R) = bool:not(=(L, R))
+

@@ -2,57 +2,64 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Abstract Datatype Playground" Height="441" Width="727">
-    <Grid Margin="0,0,-3,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="140"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <DockPanel Grid.Column="0">
-            <Label DockPanel.Dock="Top" Content="Types" Padding="5,2"/>
-            <WrapPanel DockPanel.Dock="Bottom">
-                <Button x:Name="removeTypes" Content="Remove" Margin="5,0,0,0" Click="removeTypes_Click"/>
-                <Button x:Name="newType" Content="New" Margin="5,0,0,0" Click="newType_Click"/>
-                <Button x:Name="reloadTypes" Content="Reload" Margin="5,0,0,0" Click="reloadTypes_Click"/>
-            </WrapPanel>
-            <ListBox x:Name="typeList" DockPanel.Dock="Left" SelectionChanged="typeList_SelectionChanged">
-                <!--<ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Height="20" Width ="200">
-                            <Label Height="20" Width ="200" Content="{Binding Path=Name}"></Label>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>-->
-            </ListBox>
-        </DockPanel>
-        <GridSplitter HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Column="1"/>
-        <DockPanel Grid.Column="2">
-            <WrapPanel DockPanel.Dock="Bottom">
-                <Button x:Name="saveType" Content="Save" Margin="5,0,0,0" Click="saveType_Click"/>
-            </WrapPanel>
-            <TextBox x:Name="currentType" DockPanel.Dock="Left" AcceptsReturn="True" AcceptsTab="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
-        </DockPanel>
-
-        <GridSplitter HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Column="3"/>
-        <Grid Grid.Column="4">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition Height="5"></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <DockPanel Grid.Row="0" >
-                
-                <WrapPanel x:Name="process" DockPanel.Dock="Bottom">
-                    <Button Content="Process" Click="Button_Click"></Button>
-                    <CheckBox Content="Pretty-print types"  Name="prettyPrintTypes" Padding="4,-1,0,0" Margin="5,3,0,0" IsChecked="True" Click="prettyPrint_Click"/>
+    <DockPanel>
+        <WrapPanel DockPanel.Dock="Top">
+            <Label Content="FontSize:"></Label>
+            <Slider x:Name="fontSize" Width="120" SmallChange="1" Maximum="30" Minimum="6" Value="12" LargeChange="4" Margin="0,4,0,0"/>
+        </WrapPanel>
+        <Grid DockPanel.Dock="Bottom"  Margin="0,0,-3,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0">
+                <Label DockPanel.Dock="Top" Content="Types" Padding="5,2" FontSize="{Binding Value, ElementName=fontSize}"/>
+                <WrapPanel DockPanel.Dock="Bottom">
+                    <Button x:Name="removeTypes" Content="Remove" Margin="5,0,0,0" Click="removeTypes_Click" FontSize="{Binding Value, ElementName=fontSize}"/>
+                    <Button x:Name="newType" Content="New" Margin="5,0,0,0" Click="newType_Click" FontSize="{Binding Value, ElementName=fontSize}"/>
+                    <Button x:Name="reloadTypes" Content="Reload" Margin="5,0,0,0" Click="reloadTypes_Click" FontSize="{Binding Value, ElementName=fontSize}"/>
                 </WrapPanel>
-                <TextBox DockPanel.Dock="Top" x:Name="expression" AcceptsReturn="True" AcceptsTab="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextWrapping="WrapWithOverflow"></TextBox>
+                <ListBox x:Name="typeList" DockPanel.Dock="Left" SelectionChanged="typeList_SelectionChanged" FontSize="{Binding Value, ElementName=fontSize}">
+                    <!--<ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Height="20" Width ="200">
+                                <Label Height="20" Width ="200" Content="{Binding Path=Name}"></Label>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>-->
+                </ListBox>
             </DockPanel>
-            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
-            <TextBox x:Name="result" Grid.Row="2" IsReadOnly="True" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextWrapping="WrapWithOverflow"></TextBox>
+            <GridSplitter HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Column="1"/>
+            <DockPanel Grid.Column="2">
+                <WrapPanel DockPanel.Dock="Bottom">
+                    <Button x:Name="saveType" Content="Save" Margin="5,0,0,0" Click="saveType_Click" FontSize="{Binding Value, ElementName=fontSize}"/>
+                </WrapPanel>
+                <TextBox x:Name="currentType" DockPanel.Dock="Left" AcceptsReturn="True" AcceptsTab="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontSize="{Binding Value, ElementName=fontSize}"></TextBox>
+            </DockPanel>
+
+            <GridSplitter HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.Column="3"/>
+            <Grid Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="5"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" >
+
+                    <WrapPanel DockPanel.Dock="Bottom">
+                        <Button x:Name="process" Content="Process" Click="Button_Click" FontSize="{Binding Value, ElementName=fontSize}"></Button>
+                        <CheckBox Content="Pretty-print types"  Name="prettyPrintTypes" Padding="4,0,0,0" Margin="5,3,0,0" IsChecked="True" Click="prettyPrint_Click" FontSize="{Binding Value, ElementName=fontSize}" VerticalContentAlignment="Center"/>
+                    </WrapPanel>
+                    <TextBox DockPanel.Dock="Top" x:Name="expression" AcceptsReturn="True" AcceptsTab="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextWrapping="WrapWithOverflow" FontSize="{Binding Value, ElementName=fontSize}"></TextBox>
+                </DockPanel>
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></GridSplitter>
+                <TextBox x:Name="result" Grid.Row="2" IsReadOnly="True" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextWrapping="WrapWithOverflow" FontSize="{Binding Value, ElementName=fontSize}"></TextBox>
+            </Grid>
         </Grid>
-    </Grid>
+        
+    </DockPanel>
 </Window>
