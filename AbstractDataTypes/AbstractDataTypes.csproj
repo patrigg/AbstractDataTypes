@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractDataType.cs" />
+    <Compile Include="AbstractDataTypeParser.cs" />
+    <Compile Include="AbstractDataTypeSerializer.cs" />
     <Compile Include="AstTransformer.cs" />
     <Compile Include="Axiom.cs" />
     <Compile Include="Operation.cs" />

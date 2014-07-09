@@ -12,12 +12,8 @@ namespace AbstractDataTypes
     {
         LeftParenthesis,
         RightParenthesis,
-        /*Smaller,
-        Greater,*/
         Identifier,
         IdentifierWithType,
-        /*Equal,
-        Map,*/
         Comma,
         Keyword
     }
@@ -63,17 +59,6 @@ namespace AbstractDataTypes
                 r.Read();
             }
         }
-        /*
-        public Token readNextToken()
-        {
-            Token token;
-            if(next())
-            {
-                return token;
-            }
-
-            throw new Exception("Unexpected end of file.");
-        }*/
 
         public Token take()
         {
@@ -130,31 +115,6 @@ namespace AbstractDataTypes
                         r.Read();
                         currentToken = new Token(TokenType.RightParenthesis, ")");
                         return true;
-                    /*case '<':
-                        r.Read();
-                        currentToken = new Token(TokenType.Smaller, "<");
-                        return true;
-                    case '>':
-                        r.Read();
-                        currentToken = new Token(TokenType.Greater, ">");
-                        return true;
-                    case '=':
-                        r.Read();
-                        currentToken = new Token(TokenType.Equal, "=");
-                        return true;
-                    case '-':
-                        r.Read();
-                        if(r.Peek() == '>')
-                        {
-                            r.Read();
-                            currentToken = new Token(TokenType.Map, "->");
-                            return true;
-                        }
-                        else
-                        {
-                            currentToken = createIdentifierOrKeyword(parseIdentifier("-"));
-                            return true;
-                        }*/
                     default:
                         currentToken = createIdentifierOrKeyword(parseIdentifier());
                         return true;
@@ -199,23 +159,8 @@ namespace AbstractDataTypes
                     case '\t':
                     case '(':
                     case ')':
-                    /*case '<':
-                    case '>':
-                    case '=':*/
                     case ',':
                         return sb.ToString();
-                    /*case '-':
-                        r.Read();
-                        if(r.Peek() == '>')
-                        {
-                            r.Push('-');
-                            return sb.ToString();
-                        }
-                        else
-                        {
-                            sb.Append('-');
-                        }
-                        break;*/
                     default:
                         sb.Append(r.Read());
                         break;
