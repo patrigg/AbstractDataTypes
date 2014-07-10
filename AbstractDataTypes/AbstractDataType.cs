@@ -5,21 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/* Grammar:
- * 
- * adt: 'type:' identifier 'sorts:' type-list 'operations:' operation-list 'axioms:' axiom-list
- * 
- * type-list: identifier (',' identifier)*
- * 
- * operation-list: operation*
- * 
- * operation: identifier '(' type-list? ')' '->' identifier
- * 
- * axiom-list: axiom*
- * 
- * axiom: identifier '(' arg-list? ')' '=' identifier ( '(' arg-list? ')' )? 
- * 
- */
 namespace AbstractDataTypes
 {
     public class Instance

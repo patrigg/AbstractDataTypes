@@ -1,13 +1,21 @@
 ﻿Grammar:
 
-adt: 'type:' identifier 'sorts:' type-list 'operations:' operation-list 'axioms:' axiom-list
+adt = 'type:' symbol 'sorts:' symbol-list 'operations:' operation-list 'axioms:' axiom-list
 
-type-list: identifier (',' identifier)*
+symbol-list = symbol (',' symbol)*
 
-operation-list: operation*
+operation-list = operation*
 
-operation: identifier '(' type-list? ')' '->' identifier
+operation = symbol '(' symbol-list? ')' '->' symbol
 
-axiom-list: axiom*
+axiom-list = axiom*
 
-axiom: identifier '(' arg-list? ')' '=' identifier ( '(' arg-list? ')' )?
+axiom = call '=' expression
+
+expression = call | symbol
+
+call = symbol '(' arg-list? ')'
+
+arg-list = expression (',' expression)*
+
+symbol = 'a' | 'b' | ... // all non-whitespace characters except '(', ')' and ','
