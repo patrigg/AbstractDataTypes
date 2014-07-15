@@ -12,15 +12,7 @@ Currently there is no binary release available so you need to download the sourc
 
 Getting Started
 ===============
-To run the tool, simply open the solution and run the AdtPlayground project. The main window of the application consists of four regions depicted below:
-===================X
-|     |     |     |
-|     |     |  3  |
-|  1  |  2  |_____|
-|     |     |     |
-|     |     |  4  |
-|_____|_____|_____|
-|_____|_____|_____|
+To run the tool, simply open the solution and run the AdtPlayground project.
 
-Region 1:
-List of available abstract datatypes. In the current release four types are implemented by default: bool, Number, stack, queue. New types can be added here by clicking the New button on the bottom. Remove temporarily removes a type from the list. Reload updates all types with the definition previously saved.
+A detailed description of the user interface can be found in the wiki:
+https://github.com/patrigg/AbstractDataTypes/wiki
