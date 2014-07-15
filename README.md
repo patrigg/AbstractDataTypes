@@ -15,4 +15,5 @@ Getting Started
 To run the tool, simply open the solution and run the AdtPlayground project.
 
 A detailed description of the user interface can be found in the wiki:
+
 https://github.com/patrigg/AbstractDataTypes/wiki
