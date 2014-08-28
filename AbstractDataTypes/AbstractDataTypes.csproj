@@ -54,6 +54,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushableReader.cs" />
+    <Compile Include="PushableTokenizer.cs" />
     <Compile Include="SyntaxTree.cs" />
     <Compile Include="Tokenizer.cs" />
   </ItemGroup>

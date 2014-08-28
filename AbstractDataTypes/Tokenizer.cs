@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 
 namespace AbstractDataTypes
 {
+    interface ITokenizer
+    {
+        Token take();
+        Token currentToken { get; }
+        bool EndOfStream { get; }
+        bool next();
+    }
+
     enum TokenType
     {
         LeftParenthesis,
@@ -36,7 +44,7 @@ namespace AbstractDataTypes
         public string ValueType { get { return valueType; } }
     }
 
-    class Tokenizer
+    class Tokenizer : ITokenizer
     {
         PushableReader r;
 

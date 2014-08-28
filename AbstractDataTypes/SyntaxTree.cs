@@ -205,4 +205,70 @@ namespace AbstractDataTypes
             }
         }
     }
+
+    public class Assignment : IElement
+    {
+        readonly string name;
+        readonly IElement expression;
+
+        public Assignment(string name, IElement expression)
+        {
+            this.name = name;
+            this.expression = expression;
+        }
+
+        public bool match(IElement other, Dictionary<string, IElement> context)
+        {
+            throw new NotSupportedException("assignment does not support matching");
+            /*if (context.ContainsKey(Name))
+            {
+                if (!context[Name].match(other, new Dictionary<string, IElement>()))
+                {
+                    context.Clear();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            context[Name] = other;
+            return true;*/
+        }
+
+        public string Name
+        {
+            get { return name; }
+        }
+
+
+        public IElement apply(Dictionary<string, IElement> context)
+        {
+            var expr = expression.apply(context);
+            context[Name] = expr;
+            return expr.clone();
+        }
+
+        public string Type
+        {
+            get { return expression.Type; }
+        }
+
+        public IElement clone()
+        {
+            return new Assignment(Name, expression);
+        }
+
+        public override string ToString()
+        {
+            return Name + " = " + expression.ToString();
+        }
+
+        public string ToString(string omitType, bool prettyPrint)
+        {
+            return Name + " = " + expression.ToString(omitType, prettyPrint);
+        }
+    }
+
+
 }

@@ -58,7 +58,38 @@ namespace AbstractDataTypes
             return parseSyntaxTree(tok, false);
         }
 
-        private Axiom[] parseAxioms(Tokenizer tok)
+        public IElement[] parseStatements(TextReader s, string defaultTypename)
+        {
+            var tok = new PushableTokenizer(new Tokenizer(s));
+            typename = defaultTypename;
+
+            var elements = new List<IElement>();
+
+            while(!tok.EndOfStream)
+            {
+                elements.Add(parseStatement(tok));
+            }
+
+            return elements.ToArray();
+        }
+
+        private IElement parseStatement(PushableTokenizer tok)
+        {
+            var name = tok.take();
+            if(tok.currentToken.Value == "=")
+            {
+                tok.next();
+                var expression = parseSyntaxTree(tok, false);
+                return new Assignment(name.Value, expression);
+            }
+            else
+            {
+                tok.push(name);
+                return parseSyntaxTree(tok, false);
+            }
+        }
+
+        private Axiom[] parseAxioms(ITokenizer tok)
         {
             List<Axiom> axioms = new List<Axiom>();
 
@@ -70,7 +101,7 @@ namespace AbstractDataTypes
             return axioms.ToArray();
         }
 
-        private Axiom parseAxiom(Tokenizer tok)
+        private Axiom parseAxiom(ITokenizer tok)
         {
             IElement left = parseSyntaxTree(tok);
             checkName(tok.take(), "=");
@@ -78,7 +109,7 @@ namespace AbstractDataTypes
             return new Axiom(left, right);
         }
 
-        private IElement parseSyntaxTree(Tokenizer tok, bool check = true)
+        private IElement parseSyntaxTree(ITokenizer tok, bool check = true)
         {
             var typename = this.typename;
 
@@ -166,7 +197,7 @@ namespace AbstractDataTypes
             }
         }
 
-        private Dictionary<string, Operation> parseOperations(Tokenizer tok)
+        private Dictionary<string, Operation> parseOperations(ITokenizer tok)
         {
             Dictionary<string, Operation> operations = new Dictionary<string, Operation>();
 
@@ -181,7 +212,7 @@ namespace AbstractDataTypes
             return operations;
         }
 
-        private Operation parseOperation(Tokenizer tok)
+        private Operation parseOperation(ITokenizer tok)
         {
             checkType(tok.currentToken, TokenType.Identifier);
             Operation op = new Operation();
@@ -200,7 +231,7 @@ namespace AbstractDataTypes
             return op;
         }
 
-        private string[] parseSorts(Tokenizer tok)
+        private string[] parseSorts(ITokenizer tok)
         {
             var sorts = new List<string>();
 
@@ -219,7 +250,7 @@ namespace AbstractDataTypes
             return sorts.ToArray();
         }
 
-        private string parseType(Tokenizer tok)
+        private string parseType(ITokenizer tok)
         {
             if (tok.currentToken.Type != TokenType.Identifier)
             {
@@ -229,7 +260,7 @@ namespace AbstractDataTypes
             return tok.take().Value;
         }
 
-        private string parseIdentifierWithType(Tokenizer tok, out string type, bool check = true)
+        private string parseIdentifierWithType(ITokenizer tok, out string type, bool check = true)
         {
             if (tok.currentToken.Type == TokenType.Identifier)
             {

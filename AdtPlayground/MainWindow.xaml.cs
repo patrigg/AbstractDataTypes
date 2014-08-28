@@ -197,9 +197,21 @@ namespace AdtPlayground
                     name = ((AdtInfo)typeList.SelectedItem).Type.name;
                 }
                 
-                var expression = parser.parseExpression(new StringReader(this.expression.Text), name);
-                while (AbstractDataType.lookup(expression.Type).applyAxioms(ref expression)) { }
-                result.Text = expression.ToString();
+                //var expression = parser.parseExpression(new StringReader(this.expression.Text), name);
+
+                var statements = parser.parseStatements(new StringReader(this.expression.Text), name);
+
+                var context = new Dictionary<string, IElement>();
+                IElement lastExpression = null;
+                foreach(var statement in statements)
+                {
+                    lastExpression = statement.apply(context);
+                }
+
+                lastExpression = lastExpression.apply(context);
+
+                while (AbstractDataType.lookup(lastExpression.Type).applyAxioms(ref lastExpression)) { }
+                result.Text = lastExpression.ToString();
             }
             catch (Exception ex)
             {
